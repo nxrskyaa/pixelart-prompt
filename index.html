@@ -3,32 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PIXELFORGE — Pixel Art Prompt Vault</title>
-<meta name="description" content="Copy-paste prompt vault for generating Stardew Valley / Play Kintara style top-down pixel art sprites & assets.">
+<title>PIXELFORGE · BY NXR</title>
+<meta name="description" content="NXR's pixel art prompt vault — copy-paste prompts for top-down sprite & asset generation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%232d1b3d'/%3E%3Crect x='4' y='3' width='8' height='8' fill='%23f4c430'/%3E%3Crect x='5' y='11' width='6' height='3' fill='%23e85d3d'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23160d2b'/%3E%3Crect x='3' y='3' width='4' height='4' fill='%23ff4d9d'/%3E%3Crect x='9' y='3' width='4' height='4' fill='%232de2e6'/%3E%3Crect x='3' y='9' width='4' height='4' fill='%239dff3c'/%3E%3Crect x='9' y='9' width='4' height='4' fill='%23ffd93d'/%3E%3C/svg%3E">
 <style>
   *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
 
   :root {
-    --bg: #1a1228;
-    --bg-2: #2d1b3d;
-    --panel: #241733;
-    --panel-light: #34234a;
-    --border: #5a3a7a;
-    --border-bright: #8b5fbf;
-    --ink: #f0e6ff;
-    --ink-dim: #b9a3d6;
-    --ink-faint: #7d6b9e;
-    --gold: #f4c430;
-    --gold-dark: #c89a1e;
-    --coral: #e85d3d;
-    --green: #6cc24a;
-    --sky: #5dade2;
-    --pink: #e87daf;
-    --shadow: #0d0815;
+    --bg:#160d2b;
+    --bg2:#1f1340;
+    --panel:#241650;
+    --panel2:#2e1c63;
+    --border:#5b3aa8;
+    --border2:#8b5fe0;
+    --ink:#f3ecff;
+    --ink-dim:#c3aef0;
+    --ink-faint:#8a72c0;
+    --pink:#ff4d9d;
+    --cyan:#2de2e6;
+    --lime:#9dff3c;
+    --gold:#ffd93d;
+    --orange:#ff6b35;
+    --shadow:#090414;
   }
 
   html { image-rendering: pixelated; }
@@ -36,483 +35,418 @@
   body {
     background: var(--bg);
     background-image:
-      linear-gradient(rgba(90,58,122,0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(90,58,122,0.07) 1px, transparent 1px);
-    background-size: 32px 32px;
+      radial-gradient(circle at 20% 0%, rgba(255,77,157,0.10), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(45,226,230,0.10), transparent 45%),
+      linear-gradient(rgba(91,58,168,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(91,58,168,0.08) 1px, transparent 1px);
+    background-size: auto, auto, 24px 24px, 24px 24px;
     color: var(--ink);
     font-family: "VT323", monospace;
-    font-size: 20px;
+    font-size: 21px;
     line-height: 1.4;
     min-height: 100vh;
     -webkit-font-smoothing: none;
     image-rendering: pixelated;
+    overflow-x: hidden;
   }
 
-  .pixel-font { font-family: "Press Start 2P", monospace; }
   .silk { font-family: "Silkscreen", monospace; }
 
-  /* SCANLINE OVERLAY */
+  /* SCANLINES */
   body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      rgba(0,0,0,0.12) 0px,
-      rgba(0,0,0,0.12) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
+    content:"";
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.10) 0 1px, transparent 1px 3px);
+    pointer-events: none; z-index: 9999; opacity: 0.5;
   }
 
-  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 18px; position: relative; z-index: 1; }
 
-  /* PIXEL BORDER MIXIN via box-shadow */
-  .pixel-box {
-    background: var(--panel);
-    border: 3px solid var(--border);
-    box-shadow:
-      0 0 0 3px var(--shadow),
-      6px 6px 0 0 var(--shadow);
-    position: relative;
-  }
-
-  /* HEADER */
-  header {
-    padding: 48px 0 32px;
-    text-align: center;
-    position: relative;
-  }
-  .logo-badge {
-    display: inline-block;
-    background: var(--bg-2);
-    border: 3px solid var(--gold);
-    box-shadow: 0 0 0 3px var(--shadow), 5px 5px 0 var(--shadow);
-    padding: 20px 28px;
-    margin-bottom: 20px;
-  }
-  h1.title {
-    font-family: "Press Start 2P", monospace;
-    font-size: 28px;
-    color: var(--gold);
-    text-shadow: 3px 3px 0 var(--coral), 6px 6px 0 var(--shadow);
-    letter-spacing: 2px;
-    line-height: 1.3;
-  }
-  .subtitle {
-    font-family: "Silkscreen", monospace;
-    font-size: 13px;
-    color: var(--ink-dim);
-    margin-top: 14px;
-    letter-spacing: 1px;
-  }
-  .tagline {
-    font-size: 22px;
-    color: var(--green);
-    margin-top: 18px;
-  }
-  .tagline .blink { animation: blink 1s steps(2) infinite; }
-  @keyframes blink { 0%,50%{opacity:1;} 51%,100%{opacity:0;} }
-
-  .header-meta {
-    display: flex;
+  /* ===== TOP BAR: BUILT BY NXR ===== */
+  .topbar {
+    display: flex; align-items: center; justify-content: center;
     gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 24px;
-  }
-  .chip {
+    background: var(--shadow);
+    border-bottom: 3px solid var(--pink);
+    padding: 9px 12px;
     font-family: "Silkscreen", monospace;
     font-size: 11px;
-    color: var(--ink);
-    background: var(--panel-light);
-    border: 2px solid var(--border-bright);
-    padding: 7px 12px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    color: var(--ink-dim);
   }
-  .chip.gold { border-color: var(--gold); color: var(--gold); }
-  .chip.coral { border-color: var(--coral); color: var(--coral); }
-  .chip.green { border-color: var(--green); color: var(--green); }
+  .topbar b { color: var(--gold); }
+  .topbar .nxr {
+    color: var(--bg);
+    background: var(--lime);
+    padding: 3px 8px;
+    box-shadow: 2px 2px 0 var(--shadow);
+  }
 
-  /* INFO BANNER */
-  .info-banner {
-    margin: 8px 0 40px;
-    padding: 18px 22px;
-    background: var(--panel);
-    border-left: 6px solid var(--gold);
-    border-top: 2px solid var(--border);
-    border-right: 2px solid var(--border);
-    border-bottom: 2px solid var(--border);
-    box-shadow: 4px 4px 0 var(--shadow);
+  /* ===== HERO / GAME SCREEN ===== */
+  .hero {
+    margin: 28px 0 14px;
+    border: 4px solid var(--border2);
+    box-shadow: 0 0 0 4px var(--shadow), 0 8px 0 4px var(--shadow);
+    background: linear-gradient(180deg, #2a1659 0%, #1c1142 60%, #14245a 100%);
+    position: relative;
+    overflow: hidden;
   }
-  .info-banner .ib-title {
+  .hero-stars {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    padding: 30px 24px 0;
+    text-align: center;
+  }
+  .logo {
+    font-family: "Press Start 2P", monospace;
+    font-size: 34px;
+    line-height: 1.1;
+    color: var(--gold);
+    text-shadow: 0 3px 0 var(--orange), 0 6px 0 var(--pink), 0 9px 0 var(--shadow);
+    letter-spacing: 1px;
+  }
+  .logo .x { color: var(--cyan); text-shadow: 0 3px 0 #178f92, 0 6px 0 var(--shadow); }
+  .sub {
     font-family: "Silkscreen", monospace;
     font-size: 12px;
-    color: var(--gold);
-    letter-spacing: 1px;
-    margin-bottom: 8px;
+    color: var(--ink-dim);
+    margin-top: 16px;
+    letter-spacing: 2px;
   }
-  .info-banner p { color: var(--ink-dim); font-size: 19px; }
-  .info-banner strong { color: var(--ink); }
+  .press {
+    font-size: 22px; color: var(--lime); margin-top: 12px;
+  }
+  .press .blink { animation: blink 1.06s steps(2) infinite; }
+  @keyframes blink { 0%,50%{opacity:1;} 51%,100%{opacity:0;} }
 
-  /* SECTION TITLES */
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 48px 0 24px;
+  /* ground + walking sprite */
+  .stage {
+    position: relative;
+    height: 120px;
+    margin-top: 14px;
   }
-  .section-label .num {
+  #sprite-canvas {
+    position: absolute;
+    bottom: 26px;
+    left: 0;
+    image-rendering: pixelated;
+    z-index: 3;
+  }
+  .ground {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 26px;
+    background:
+      repeating-linear-gradient(90deg, #3a7d3a 0 12px, #2f6b2f 12px 24px);
+    border-top: 4px solid #50a050;
+    box-shadow: inset 0 4px 0 rgba(255,255,255,0.12);
+  }
+  .ground::before {
+    content:"";
+    position: absolute; top: -4px; left: 0; right: 0; height: 4px;
+    background: repeating-linear-gradient(90deg, #6bd96b 0 6px, transparent 6px 18px);
+  }
+
+  /* ===== STAT BAR ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 18px 0 8px;
+  }
+  .stat {
+    border: 3px solid var(--border);
+    box-shadow: 4px 4px 0 var(--shadow);
+    background: var(--panel);
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .stat .v {
     font-family: "Press Start 2P", monospace;
-    font-size: 13px;
-    color: var(--bg);
-    background: var(--gold);
-    padding: 10px 12px;
-    box-shadow: 3px 3px 0 var(--shadow);
+    font-size: 18px;
   }
-  .section-label .txt {
+  .stat .l {
     font-family: "Silkscreen", monospace;
-    font-size: 16px;
-    color: var(--ink);
+    font-size: 10px;
+    color: var(--ink-faint);
+    margin-top: 7px;
     letter-spacing: 1px;
   }
-  .section-label .line {
-    flex: 1;
-    height: 3px;
-    background: repeating-linear-gradient(90deg, var(--border) 0 8px, transparent 8px 12px);
-  }
+  .stat.a .v { color: var(--pink); }
+  .stat.b .v { color: var(--cyan); }
+  .stat.c .v { color: var(--lime); }
 
-  /* PROMPT CARD */
-  .card {
+  /* ===== INFO ===== */
+  .info {
+    margin: 18px 0 34px;
+    padding: 16px 20px;
     background: var(--panel);
     border: 3px solid var(--border);
+    border-left: 7px solid var(--gold);
+    box-shadow: 4px 4px 0 var(--shadow);
+  }
+  .info .h {
+    font-family: "Silkscreen", monospace; font-size: 12px;
+    color: var(--gold); letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .info p { color: var(--ink-dim); font-size: 19px; }
+  .info strong { color: var(--ink); }
+
+  /* ===== SECTION LABEL ===== */
+  .seclabel { display: flex; align-items: center; gap: 12px; margin: 46px 0 22px; }
+  .seclabel .tag {
+    font-family: "Press Start 2P", monospace; font-size: 12px;
+    color: var(--bg); background: var(--cyan);
+    padding: 10px 12px; box-shadow: 3px 3px 0 var(--shadow);
+  }
+  .seclabel .t {
+    font-family: "Silkscreen", monospace; font-size: 15px;
+    color: var(--ink); letter-spacing: 1px;
+  }
+  .seclabel .ln {
+    flex: 1; height: 4px;
+    background: repeating-linear-gradient(90deg, var(--border2) 0 6px, transparent 6px 12px);
+  }
+
+  /* ===== PALETTE ===== */
+  .palette {
+    display: flex; flex-wrap: wrap;
+    border: 3px solid var(--border2);
+    box-shadow: 4px 4px 0 var(--shadow);
+    overflow: hidden;
+  }
+  .sw { flex: 1 1 56px; height: 52px; min-width: 56px; position: relative; }
+  .sw span {
+    position: absolute; bottom: 3px; left: 4px;
+    font-family: "Silkscreen", monospace; font-size: 8px;
+    color: rgba(0,0,0,0.55); text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+  }
+
+  /* ===== PROMPT CARD ===== */
+  .card {
+    border: 3px solid var(--border);
     box-shadow: 0 0 0 3px var(--shadow), 7px 7px 0 var(--shadow);
-    margin-bottom: 40px;
+    margin-bottom: 38px;
+    background: var(--panel);
   }
   .card-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 16px 20px;
-    background: var(--bg-2);
+    display: flex; align-items: center; gap: 14px;
+    padding: 15px 18px;
+    background: var(--bg2);
     border-bottom: 3px solid var(--border);
     flex-wrap: wrap;
   }
-  .card-head-left { display: flex; align-items: center; gap: 14px; }
-  .card-icon {
-    width: 38px; height: 38px;
-    background: var(--panel-light);
-    border: 2px solid var(--border-bright);
-    display: grid;
-    place-items: center;
-    font-size: 22px;
+  .num-tile {
+    width: 42px; height: 42px;
+    display: grid; place-items: center;
+    font-family: "Press Start 2P", monospace; font-size: 14px;
+    color: var(--bg);
+    box-shadow: 3px 3px 0 var(--shadow);
     flex-shrink: 0;
   }
+  .card-titles { flex: 1; min-width: 180px; }
   .card-title {
-    font-family: "Silkscreen", monospace;
-    font-size: 15px;
-    color: var(--gold);
-    letter-spacing: 0.5px;
+    font-family: "Silkscreen", monospace; font-size: 14px;
+    color: var(--ink); letter-spacing: 0.5px;
   }
-  .card-sub {
-    font-size: 16px;
-    color: var(--ink-faint);
-    margin-top: 2px;
-  }
+  .card-sub { font-size: 17px; color: var(--ink-faint); margin-top: 3px; }
   .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-  .mini-tag {
-    font-family: "Silkscreen", monospace;
-    font-size: 9px;
-    padding: 4px 7px;
-    border: 1px solid var(--border-bright);
-    color: var(--ink-dim);
-    letter-spacing: 0.5px;
+  .mtag {
+    font-family: "Silkscreen", monospace; font-size: 9px;
+    padding: 4px 7px; border: 1px solid var(--border2);
+    color: var(--ink-dim); letter-spacing: 0.5px;
   }
 
-  .card-body { padding: 20px; }
-  .prompt-text {
-    background: var(--bg);
+  .card-body { padding: 18px; }
+  .ptext {
+    background: var(--shadow);
     border: 2px solid var(--border);
-    padding: 18px;
-    font-family: "VT323", monospace;
-    font-size: 18px;
-    line-height: 1.5;
+    padding: 16px;
+    font-size: 18px; line-height: 1.5;
     color: var(--ink-dim);
     white-space: pre-wrap;
-    max-height: 280px;
-    overflow-y: auto;
-    margin-bottom: 16px;
+    max-height: 270px; overflow-y: auto;
+    margin-bottom: 15px;
   }
-  .prompt-text::-webkit-scrollbar { width: 12px; }
-  .prompt-text::-webkit-scrollbar-track { background: var(--bg-2); }
-  .prompt-text::-webkit-scrollbar-thumb { background: var(--border); border: 2px solid var(--bg-2); }
-  .prompt-text strong { color: var(--gold); font-weight: normal; }
+  .ptext::-webkit-scrollbar { width: 12px; }
+  .ptext::-webkit-scrollbar-track { background: var(--bg2); }
+  .ptext::-webkit-scrollbar-thumb { background: var(--border2); border: 2px solid var(--bg2); }
 
-  .card-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* PIXEL BUTTON */
   .btn {
-    font-family: "Silkscreen", monospace;
-    font-size: 13px;
-    letter-spacing: 1px;
-    padding: 14px 22px;
-    border: none;
-    cursor: pointer;
-    color: var(--bg);
-    background: var(--gold);
-    box-shadow: 0 4px 0 var(--gold-dark), 0 4px 0 3px var(--shadow);
-    transition: all 0.08s;
-    text-transform: uppercase;
-    position: relative;
-    top: 0;
+    font-family: "Silkscreen", monospace; font-size: 13px; letter-spacing: 1px;
+    padding: 14px 22px; border: none; cursor: pointer;
+    color: var(--bg); background: var(--gold);
+    box-shadow: 0 5px 0 var(--orange), 0 5px 0 3px var(--shadow);
+    transition: all 0.07s; text-transform: uppercase;
+    position: relative; top: 0;
   }
-  .btn:active {
-    top: 4px;
-    box-shadow: 0 0 0 var(--gold-dark), 0 0 0 3px var(--shadow);
+  .btn:active { top: 5px; box-shadow: 0 0 0 var(--orange), 0 0 0 3px var(--shadow); }
+  .btn.sec {
+    background: var(--panel2); color: var(--ink);
+    box-shadow: 0 5px 0 var(--border), 0 5px 0 3px var(--shadow);
   }
-  .btn.secondary {
-    background: var(--panel-light);
-    color: var(--ink);
-    box-shadow: 0 4px 0 var(--border), 0 4px 0 3px var(--shadow);
-  }
-  .btn.secondary:active {
-    box-shadow: 0 0 0 var(--border), 0 0 0 3px var(--shadow);
-  }
-  .btn.copied {
-    background: var(--green);
-    box-shadow: 0 4px 0 #4a8a2e, 0 4px 0 3px var(--shadow);
-  }
+  .btn.sec:active { box-shadow: 0 0 0 var(--border), 0 0 0 3px var(--shadow); }
+  .btn.ok { background: var(--lime); box-shadow: 0 5px 0 #5fa820, 0 5px 0 3px var(--shadow); }
 
-  /* TIPS SECTION */
-  .tips-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
+  /* ===== TIPS ===== */
+  .tips { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .tip {
-    background: var(--panel);
-    border: 2px solid var(--border);
-    box-shadow: 4px 4px 0 var(--shadow);
-    padding: 16px 18px;
+    background: var(--panel); border: 2px solid var(--border);
+    box-shadow: 4px 4px 0 var(--shadow); padding: 15px 17px;
   }
-  .tip-icon { font-size: 24px; margin-bottom: 8px; }
-  .tip-title {
-    font-family: "Silkscreen", monospace;
-    font-size: 12px;
-    color: var(--green);
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
+  .tip .th {
+    font-family: "Silkscreen", monospace; font-size: 12px;
+    margin-bottom: 7px; letter-spacing: 0.5px;
   }
   .tip p { font-size: 18px; color: var(--ink-dim); }
+  .tip strong { color: var(--gold); }
 
-  /* PALETTE STRIP */
-  .palette-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    border: 3px solid var(--border);
-    box-shadow: 4px 4px 0 var(--shadow);
-    margin-top: 8px;
-    overflow: hidden;
-  }
-  .swatch {
-    flex: 1 1 60px;
-    height: 56px;
-    position: relative;
-    min-width: 60px;
-  }
-  .swatch span {
-    position: absolute;
-    bottom: 4px; left: 4px;
-    font-family: "Silkscreen", monospace;
-    font-size: 8px;
-    color: rgba(255,255,255,0.7);
-    text-shadow: 1px 1px 0 #000;
-  }
-
-  /* FOOTER */
+  /* ===== FOOTER ===== */
   footer {
-    margin-top: 64px;
-    padding: 32px 0 48px;
-    text-align: center;
-    border-top: 3px dashed var(--border);
+    margin-top: 56px; padding: 28px 0 44px; text-align: center;
+    border-top: 3px dashed var(--border2);
   }
-  .footer-text {
-    font-family: "Silkscreen", monospace;
-    font-size: 11px;
-    color: var(--ink-faint);
-    letter-spacing: 1px;
-    line-height: 2;
+  .sig {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--panel); border: 3px solid var(--lime);
+    box-shadow: 4px 4px 0 var(--shadow);
+    padding: 12px 18px; margin-bottom: 18px;
   }
-  .footer-text a { color: var(--gold); text-decoration: none; }
-  .footer-text a:hover { color: var(--coral); }
-  .heart { color: var(--coral); animation: beat 0.8s steps(2) infinite; display:inline-block; }
-  @keyframes beat { 0%,50%{transform:scale(1);} 51%,100%{transform:scale(1.3);} }
+  .sig .by { font-family: "Silkscreen", monospace; font-size: 11px; color: var(--ink-faint); letter-spacing: 1px; }
+  .sig .name { font-family: "Press Start 2P", monospace; font-size: 14px; color: var(--lime); }
+  .fline {
+    font-family: "Silkscreen", monospace; font-size: 11px;
+    color: var(--ink-faint); letter-spacing: 1px; line-height: 2;
+  }
+  .fline a { color: var(--cyan); text-decoration: none; }
+  .fline a:hover { color: var(--pink); }
+  .heart { color: var(--pink); display: inline-block; animation: beat 0.8s steps(2) infinite; }
+  @keyframes beat { 0%,50%{transform:scale(1);} 51%,100%{transform:scale(1.35);} }
 
   /* TOAST */
   .toast {
-    position: fixed;
-    bottom: 24px; left: 50%;
+    position: fixed; bottom: 22px; left: 50%;
     transform: translateX(-50%) translateY(120px);
-    background: var(--green);
-    color: var(--bg);
-    font-family: "Silkscreen", monospace;
-    font-size: 13px;
-    padding: 14px 24px;
-    border: 3px solid var(--shadow);
-    box-shadow: 5px 5px 0 var(--shadow);
-    z-index: 10000;
-    transition: transform 0.2s steps(4);
-    letter-spacing: 1px;
+    background: var(--lime); color: var(--bg);
+    font-family: "Silkscreen", monospace; font-size: 13px;
+    padding: 14px 24px; border: 3px solid var(--shadow);
+    box-shadow: 5px 5px 0 var(--shadow); z-index: 10000;
+    transition: transform 0.18s steps(4); letter-spacing: 1px;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
-  /* FLOATING SPRITE DECO */
-  .deco {
-    position: fixed;
-    font-size: 28px;
-    opacity: 0.18;
-    pointer-events: none;
-    animation: float 4s ease-in-out infinite;
-    z-index: 0;
-  }
-  @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
-
   @media (max-width: 680px) {
-    h1.title { font-size: 18px; }
-    .tips-grid { grid-template-columns: 1fr; }
+    .logo { font-size: 22px; }
+    .tips { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr; }
     .card-head { flex-direction: column; align-items: flex-start; }
-    body { font-size: 18px; }
-    .section-label .txt { font-size: 13px; }
-    .deco { display: none; }
+    body { font-size: 19px; }
   }
 </style>
 </head>
 <body>
 
-<!-- floating deco -->
-<div class="deco" style="top:12%; left:4%;">🌳</div>
-<div class="deco" style="top:30%; right:5%; animation-delay:1s;">🍄</div>
-<div class="deco" style="top:60%; left:3%; animation-delay:2s;">🌸</div>
-<div class="deco" style="top:78%; right:4%; animation-delay:0.5s;">⛏️</div>
+<div class="topbar">
+  <span>⬢ BUILT BY</span><span class="nxr">NXR</span><span>· <b>PIXELFORGE</b> ENGINE v1</span>
+</div>
 
 <div class="wrap">
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo-badge">
-      <h1 class="title">PIXELFORGE</h1>
+  <!-- HERO -->
+  <div class="hero">
+    <canvas class="hero-stars" id="stars"></canvas>
+    <div class="hero-inner">
+      <div class="logo">PI<span class="x">X</span>ELFORGE</div>
+      <div class="sub">// PIXEL ART PROMPT VAULT //</div>
+      <div class="press">▶ COPY · PASTE · GENERATE<span class="blink">_</span></div>
+      <div class="stage">
+        <canvas id="sprite-canvas"></canvas>
+        <div class="ground"></div>
+      </div>
     </div>
-    <div class="subtitle">// PIXEL ART PROMPT VAULT //</div>
-    <div class="tagline">▶ COPY · PASTE · GENERATE<span class="blink">_</span></div>
-    <div class="header-meta">
-      <span class="chip gold">★ STARDEW STYLE</span>
-      <span class="chip green">TOP-DOWN 3/4 VIEW</span>
-      <span class="chip coral">PLAY KINTARA VIBE</span>
-      <span class="chip">16-BIT / SNES</span>
-    </div>
-  </header>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat a"><div class="v" id="s-prompts">5</div><div class="l">PROMPTS</div></div>
+    <div class="stat b"><div class="v">4-DIR</div><div class="l">TOP-DOWN</div></div>
+    <div class="stat c"><div class="v">16</div><div class="l">COLOR CAP</div></div>
+  </div>
 
   <!-- INFO -->
-  <div class="info-banner">
-    <div class="ib-title">⚑ HOW TO USE</div>
-    <p>Pick a prompt below, hit <strong>COPY</strong>, paste it into ChatGPT / DALL·E / your image model, and attach your <strong>reference image</strong> where noted. Every prompt is tuned for <strong>top-down 3/4 perspective</strong> like Stardew Valley & Play Kintara — not side-scroll. Swap the <strong>[bracketed]</strong> bits with your own details.</p>
+  <div class="info">
+    <div class="h">⚑ HOW TO USE</div>
+    <p>Pick a prompt, hit <strong>COPY</strong>, paste into your image model (ChatGPT / DALL·E), and attach your <strong>reference image</strong> where noted. All prompts lock <strong>top-down 3/4 perspective</strong> — not side-scroll. Swap the <strong>[bracketed]</strong> bits with your own details.</p>
   </div>
 
   <!-- PALETTE -->
-  <div class="section-label">
-    <span class="num">◆</span>
-    <span class="txt">RECOMMENDED PALETTE — COZY MUTED</span>
-    <span class="line"></span>
+  <div class="seclabel">
+    <span class="tag">◆</span><span class="t">SUGGESTED PALETTE</span><span class="ln"></span>
   </div>
-  <div class="palette-strip">
-    <div class="swatch" style="background:#2d1b3d;"><span>#2D1B3D</span></div>
-    <div class="swatch" style="background:#6b4a8a;"><span>#6B4A8A</span></div>
-    <div class="swatch" style="background:#e85d3d;"><span>#E85D3D</span></div>
-    <div class="swatch" style="background:#f4c430;"><span>#F4C430</span></div>
-    <div class="swatch" style="background:#6cc24a;"><span>#6CC24A</span></div>
-    <div class="swatch" style="background:#3a7d5c;"><span>#3A7D5C</span></div>
-    <div class="swatch" style="background:#5dade2;"><span>#5DADE2</span></div>
-    <div class="swatch" style="background:#c9a87c;"><span>#C9A87C</span></div>
-    <div class="swatch" style="background:#8a5a3c;"><span>#8A5A3C</span></div>
-    <div class="swatch" style="background:#f0e6d2;"><span>#F0E6D2</span></div>
+  <div class="palette">
+    <div class="sw" style="background:#2d1b3d;"><span>2D1B3D</span></div>
+    <div class="sw" style="background:#6b4a8a;"><span>6B4A8A</span></div>
+    <div class="sw" style="background:#ff4d9d;"><span>FF4D9D</span></div>
+    <div class="sw" style="background:#ff6b35;"><span>FF6B35</span></div>
+    <div class="sw" style="background:#ffd93d;"><span>FFD93D</span></div>
+    <div class="sw" style="background:#9dff3c;"><span>9DFF3C</span></div>
+    <div class="sw" style="background:#2de2e6;"><span>2DE2E6</span></div>
+    <div class="sw" style="background:#5dade2;"><span>5DADE2</span></div>
+    <div class="sw" style="background:#c9a87c;"><span>C9A87C</span></div>
+    <div class="sw" style="background:#f0e6d2;"><span>F0E6D2</span></div>
   </div>
 
-  <!-- PROMPTS CONTAINER -->
-  <div class="section-label">
-    <span class="num">01</span>
-    <span class="txt">PROMPT VAULT</span>
-    <span class="line"></span>
+  <!-- PROMPTS -->
+  <div class="seclabel">
+    <span class="tag">01</span><span class="t">PROMPT VAULT</span><span class="ln"></span>
   </div>
-
-  <div id="prompt-list"></div>
+  <div id="list"></div>
 
   <!-- TIPS -->
-  <div class="section-label">
-    <span class="num">02</span>
-    <span class="txt">PRO TIPS — GET CLEANER SPRITES</span>
-    <span class="line"></span>
+  <div class="seclabel">
+    <span class="tag">02</span><span class="t">PRO TIPS</span><span class="ln"></span>
   </div>
-  <div class="tips-grid">
-    <div class="tip">
-      <div class="tip-icon">🎯</div>
-      <div class="tip-title">LOCK THE PERSPECTIVE</div>
-      <p>Always say "top-down 3/4 view" + "no side-scroll". Models default to side-view if you mention "platformer".</p>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">🟪</div>
-      <div class="tip-title">MAGENTA KEY BG</div>
-      <p>Flat <strong>#FF00FF</strong> background = easy 1-click removal later in any editor or remove.bg.</p>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">🔢</div>
-      <div class="tip-title">CAP THE PALETTE</div>
-      <p>"max ~16 colors" forces real pixel-art shading instead of smooth painted gradients.</p>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">🚫</div>
-      <div class="tip-title">KILL ANTI-ALIASING</div>
-      <p>Repeat "no anti-aliasing, no blur, hard edges, crisp pixels" — it's the #1 thing models forget.</p>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">📐</div>
-      <div class="tip-title">GRID + FRAMES</div>
-      <p>State exact rows×cols ("4 rows of 4 frames") so the spritesheet comes back evenly aligned.</p>
-    </div>
-    <div class="tip">
-      <div class="tip-icon">🧍</div>
-      <div class="tip-title">IDENTITY FIRST</div>
-      <p>Tell it to "preserve face, hair, outfit, colors, proportions" so the character stays consistent across frames.</p>
-    </div>
+  <div class="tips">
+    <div class="tip"><div class="th" style="color:var(--pink)">LOCK PERSPECTIVE</div><p>Always say "top-down 3/4 view" + "<strong>not side-scroll</strong>". Models default to side-view if you say "platformer".</p></div>
+    <div class="tip"><div class="th" style="color:var(--cyan)">MAGENTA KEY BG</div><p>Flat <strong>#FF00FF</strong> background = 1-click removal later in any editor.</p></div>
+    <div class="tip"><div class="th" style="color:var(--lime)">CAP THE PALETTE</div><p>"max ~16 colors" forces real pixel shading instead of smooth gradients.</p></div>
+    <div class="tip"><div class="th" style="color:var(--gold)">KILL ANTI-ALIASING</div><p>Repeat "<strong>no anti-aliasing, no blur, hard edges</strong>" — the #1 thing models forget.</p></div>
+    <div class="tip"><div class="th" style="color:var(--orange)">GRID + FRAMES</div><p>State exact rows×cols ("4 rows of 4 frames") so the sheet comes back aligned.</p></div>
+    <div class="tip"><div class="th" style="color:var(--pink)">IDENTITY FIRST</div><p>Tell it to "<strong>preserve face, hair, outfit, colors, proportions</strong>" for consistency.</p></div>
   </div>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-text">
-      MADE WITH <span class="heart">♥</span> BY <a href="https://github.com/nxrskyaa" target="_blank">NXRSKYAA</a><br>
-      PIXELFORGE © 2026 · <a href="https://github.com/nxrskyaa/pixelart-prompt" target="_blank">SOURCE</a> · <a href="https://x.com/nxrskyaa" target="_blank">@NXRSKYAA</a><br>
-      ▰▰▰ PRESS START TO BUILD ▰▰▰
+    <div class="sig">
+      <span class="by">⬢ BUILT BY</span>
+      <span class="name">NXR</span>
+    </div>
+    <div class="fline">
+      MADE WITH <span class="heart">♥</span> · <a href="https://github.com/nxrskyaa/pixelart-prompt" target="_blank">SOURCE</a> · <a href="https://github.com/nxrskyaa" target="_blank">GITHUB</a> · <a href="https://x.com/nxrskyaa" target="_blank">@NXRSKYAA</a><br>
+      ▰▰▰ PIXELFORGE © 2026 — STAY COZY, KEEP BUILDING ▰▰▰
     </div>
   </footer>
 
 </div>
 
-<div class="toast" id="toast">✓ COPIED TO CLIPBOARD!</div>
+<div class="toast" id="toast">✓ COPIED!</div>
 
 <script>
+/* ============ PROMPTS ============ */
 const prompts = [
   {
-    icon: "🧍",
+    color: "var(--pink)",
     title: "CHARACTER SPRITE — FROM REFERENCE",
-    sub: "Single idle pose, 4-direction turnaround, top-down",
+    sub: "Single idle + 4-direction turnaround",
     tags: ["NPC", "REFERENCE IMG", "IDLE"],
     text: `Use the uploaded reference image as the main character reference.
 
-Generate a retro pixel art character sprite for a TOP-DOWN 3/4 perspective life-sim / farming RPG (like Stardew Valley or Play Kintara). NOT side-scroll, NOT side-view.
+Generate a retro pixel art character sprite for a TOP-DOWN 3/4 perspective life-sim / farming RPG. NOT side-scroll, NOT side-view.
 
 PRESERVE CHARACTER IDENTITY from the reference:
 - same face shape and expression
@@ -525,26 +459,26 @@ STYLE:
 - 16-bit / SNES-era pixel art, limited palette (max ~16 colors)
 - cozy muted color grade (warm earthy tones, soft contrast)
 - crisp hard pixels, NO anti-aliasing, NO blur, NO soft glow, hard edges
-- top-down 3/4 view (camera angled slightly down, like classic farming RPGs)
+- top-down 3/4 view (camera angled slightly down, classic farming-RPG angle)
 - consistent pixel grid, clean cel-shading, light from top-left
 - readable silhouette, game-asset quality
 
 TURNAROUND — one character in 4 facing directions:
-DOWN (front), UP (back), LEFT, RIGHT — standing idle pose, arranged in a single horizontal row, evenly spaced, identical scale and lighting.
+DOWN (front), UP (back), LEFT, RIGHT — standing idle pose, single horizontal row, evenly spaced, identical scale and lighting.
 
 OUTPUT:
-- full body visible, character centered in each cell
+- full body visible, centered in each cell
 - solid flat magenta (#FF00FF) background for easy keying
 - no scenery, no ground shadow, no text, no labels, no watermark, no UI, no border.`
   },
   {
-    icon: "🏃",
+    color: "var(--cyan)",
     title: "WALK CYCLE SPRITESHEET — 4 DIRECTIONS",
-    sub: "Full directional walk animation, game-ready grid",
+    sub: "Full directional walk animation grid",
     tags: ["SPRITESHEET", "WALK", "ANIMATED"],
     text: `Use the uploaded reference image as the main character reference. Do NOT redesign the character — keep the exact same face, hair, outfit, colors, accessories, and proportions across every single frame.
 
-Create a clean game-ready 2D pixel art WALK-CYCLE spritesheet for a TOP-DOWN 3/4 perspective life-sim RPG (Stardew Valley / Play Kintara style). NOT side-scroll.
+Create a clean game-ready 2D pixel art WALK-CYCLE spritesheet for a TOP-DOWN 3/4 perspective life-sim RPG. NOT side-scroll.
 
 STYLE:
 - retro 16-bit / SNES-era pixel art
@@ -553,7 +487,7 @@ STYLE:
 - consistent pixel grid, clean shading, light from top-left
 - identical character in every frame, consistent scale and palette
 
-SPRITESHEET LAYOUT — 4 rows × 4 frames (16 frames total):
+SPRITESHEET LAYOUT — 4 rows x 4 frames (16 frames total):
 - ROW 1: walking DOWN (toward camera) — 4 frame cycle
 - ROW 2: walking UP (away from camera) — 4 frame cycle
 - ROW 3: walking LEFT — 4 frame cycle
@@ -563,16 +497,16 @@ Each row is a smooth 4-step loop (contact, passing, contact, passing). Frames ev
 OUTPUT:
 - full body visible, centered in each cell
 - transparent background OR flat magenta (#FF00FF) for easy keying
-- spritesheet only — no text, no labels, no frame numbers, no watermark, no UI, no border, no background scenery.`
+- spritesheet only — no text, no labels, no frame numbers, no watermark, no UI, no border, no scenery.`
   },
   {
-    icon: "🎮",
+    color: "var(--lime)",
     title: "FULL ACTION SET — IDLE + WALK + RUN",
-    sub: "12-16 frames, multi-state animation sheet",
+    sub: "12-16 frame multi-state sheet",
     tags: ["SPRITESHEET", "MULTI-STATE", "RUN"],
     text: `Use the uploaded reference image as the main character reference. Keep the character 100% identical across all frames — same face, hair, outfit, colors, accessories, proportions. Do not redesign.
 
-Build a complete pixel art ACTION SPRITESHEET for a TOP-DOWN 3/4 perspective RPG (Stardew Valley / Play Kintara vibe). NOT side-scroll, NOT side profile.
+Build a complete pixel art ACTION SPRITESHEET for a TOP-DOWN 3/4 perspective RPG. NOT side-scroll, NOT side profile.
 
 STYLE:
 - retro 16-bit / SNES pixel art, ~12-16 color cozy muted palette
@@ -592,13 +526,13 @@ OUTPUT:
 - spritesheet only — no text, no labels, no numbers, no watermark, no UI, no border, no scenery.`
   },
   {
-    icon: "🏠",
+    color: "var(--gold)",
     title: "BUILDING / STRUCTURE ASSET",
-    sub: "Cozy top-down building, Eastward + Stardew style",
+    sub: "Cozy high-angle top-down building",
     tags: ["ENVIRONMENT", "BUILDING", "REFERENCE IMG"],
     text: `Inspired by the uploaded reference image.
 
-Generate a pixel art BUILDING asset, high-angle top-down 2.5D view, cozy detailed style inspired by Eastward, Stardew Valley, and Play Kintara.
+Generate a pixel art BUILDING asset, high-angle top-down 2.5D view, cozy detailed style.
 
 STRUCTURE (adapt to reference):
 - dark blue-grey curved tiled roof with wooden ridge beams
@@ -621,11 +555,11 @@ COMPOSITION:
 - 1:1 square, NO text, NO watermark, NO signature, NO border.`
   },
   {
-    icon: "🌿",
+    color: "var(--orange)",
     title: "ENVIRONMENT PROPS / TILESET KIT",
-    sub: "Matching decor: trees, rocks, crops, fences",
+    sub: "Matching trees, rocks, crops, fences",
     tags: ["TILESET", "PROPS", "BONUS"],
-    text: `Generate a cohesive pixel art PROP & DECOR KIT for a TOP-DOWN 3/4 perspective life-sim RPG (Stardew Valley / Play Kintara style).
+    text: `Generate a cohesive pixel art PROP & DECOR KIT for a TOP-DOWN 3/4 perspective life-sim RPG.
 
 CONTENTS — arrange as a neat grid of separated objects:
 - 2 trees (one round leafy, one tall pine)
@@ -649,93 +583,161 @@ OUTPUT:
   }
 ];
 
-const list = document.getElementById('prompt-list');
-const toast = document.getElementById('toast');
-
+/* ============ RENDER CARDS ============ */
+const list = document.getElementById('list');
 prompts.forEach((p, i) => {
   const card = document.createElement('div');
   card.className = 'card';
-  const tagsHtml = p.tags.map(t => `<span class="mini-tag">${t}</span>`).join('');
   card.innerHTML = `
     <div class="card-head">
-      <div class="card-head-left">
-        <div class="card-icon">${p.icon}</div>
-        <div>
-          <div class="card-title">${String(i+1).padStart(2,'0')} · ${p.title}</div>
-          <div class="card-sub">${p.sub}</div>
-        </div>
+      <div class="num-tile" style="background:${p.color}">${String(i+1).padStart(2,'0')}</div>
+      <div class="card-titles">
+        <div class="card-title">${p.title}</div>
+        <div class="card-sub">${p.sub}</div>
       </div>
-      <div class="card-tags">${tagsHtml}</div>
+      <div class="card-tags">${p.tags.map(t=>`<span class="mtag">${t}</span>`).join('')}</div>
     </div>
     <div class="card-body">
-      <div class="prompt-text" id="pt-${i}"></div>
-      <div class="card-actions">
+      <div class="ptext" id="pt-${i}"></div>
+      <div class="actions">
         <button class="btn" data-copy="${i}">⬡ COPY PROMPT</button>
-        <button class="btn secondary" data-expand="${i}">⤢ FULL VIEW</button>
+        <button class="btn sec" data-expand="${i}">⤢ FULL VIEW</button>
       </div>
-    </div>
-  `;
+    </div>`;
   list.appendChild(card);
   document.getElementById(`pt-${i}`).textContent = p.text;
 });
 
-let toastTimer;
-function showToast(msg, ok=true) {
-  toast.textContent = msg;
-  toast.style.background = ok ? 'var(--green)' : 'var(--coral)';
-  toast.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
-}
+/* ============ COPY / EXPAND ============ */
+const toast = document.getElementById('toast');
+let tt;
+function showToast(m){ toast.textContent=m; toast.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>toast.classList.remove('show'),1700); }
 
 document.addEventListener('click', async (e) => {
-  const copyBtn = e.target.closest('[data-copy]');
-  const expandBtn = e.target.closest('[data-expand]');
-
-  if (copyBtn) {
-    const i = copyBtn.dataset.copy;
-    try {
-      await navigator.clipboard.writeText(prompts[i].text);
-    } catch {
-      const ta = document.createElement('textarea');
-      ta.value = prompts[i].text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      ta.remove();
-    }
-    copyBtn.classList.add('copied');
-    copyBtn.textContent = '✓ COPIED!';
+  const cb = e.target.closest('[data-copy]');
+  const eb = e.target.closest('[data-expand]');
+  if (cb) {
+    const i = cb.dataset.copy;
+    try { await navigator.clipboard.writeText(prompts[i].text); }
+    catch { const ta=document.createElement('textarea'); ta.value=prompts[i].text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+    cb.classList.add('ok'); cb.textContent='✓ COPIED!';
     showToast('✓ PROMPT COPIED!');
-    setTimeout(() => {
-      copyBtn.classList.remove('copied');
-      copyBtn.textContent = '⬡ COPY PROMPT';
-    }, 1500);
+    setTimeout(()=>{ cb.classList.remove('ok'); cb.textContent='⬡ COPY PROMPT'; },1400);
   }
+  if (eb) {
+    const el = document.getElementById(`pt-${eb.dataset.expand}`);
+    if (el.style.maxHeight==='none'){ el.style.maxHeight='270px'; eb.textContent='⤢ FULL VIEW'; }
+    else { el.style.maxHeight='none'; eb.textContent='⤡ COLLAPSE'; }
+  }
+});
 
-  if (expandBtn) {
-    const i = expandBtn.dataset.expand;
-    const el = document.getElementById(`pt-${i}`);
-    if (el.style.maxHeight === 'none') {
-      el.style.maxHeight = '280px';
-      expandBtn.textContent = '⤢ FULL VIEW';
-    } else {
-      el.style.maxHeight = 'none';
-      expandBtn.textContent = '⤡ COLLAPSE';
+/* ============ STARFIELD ============ */
+(function(){
+  const c = document.getElementById('stars');
+  const ctx = c.getContext('2d');
+  function size(){ c.width = c.offsetWidth; c.height = c.offsetHeight; }
+  const stars = [];
+  function seed(){
+    stars.length = 0;
+    const n = Math.floor((c.width*c.height)/6000);
+    for (let i=0;i<n;i++) stars.push({x:Math.random()*c.width, y:Math.random()*c.height*0.7, s:Math.random()<0.5?2:3, t:Math.random()*100, sp:0.4+Math.random()});
+  }
+  const cols = ['#fff','#ffd93d','#2de2e6','#ff4d9d'];
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    for (const st of stars){
+      st.t += st.sp;
+      const tw = (Math.sin(st.t*0.05)+1)/2;
+      if (tw>0.25){
+        ctx.fillStyle = cols[(Math.floor(st.x+st.y))%cols.length];
+        ctx.globalAlpha = 0.3+tw*0.7;
+        ctx.fillRect(Math.floor(st.x), Math.floor(st.y), st.s, st.s);
+      }
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+  function init(){ size(); seed(); }
+  window.addEventListener('resize', init);
+  init(); draw();
+})();
+
+/* ============ WALKING PIXEL SPRITE (canvas) ============ */
+(function(){
+  const PAL = {
+    '.':null, K:'#1a0f2e', H:'#7c4a2d', h:'#9c5f3a',
+    S:'#f5c89c', s:'#e0a878', E:'#1a0f2e',
+    B:'#ff4d9d', b:'#d63d80', P:'#2de2e6', p:'#1ba8ac', O:'#ffd93d'
+  };
+  // upper body rows 0..11 (11 wide) — constant
+  const upper = [
+    "...KKKK....",
+    "..KHHHHK...",
+    ".KHHHHHHK..",
+    ".KHhhHHHK..",
+    ".KHSSSSsK..",
+    ".KHSESSsK..",
+    ".KHSSSSsK..",
+    "..KSSSSK...",
+    "..KsssK....",
+    ".KBBBBBBK..",
+    "KBBBBBBBBK.",
+    "KBbBBBBbBK."
+  ];
+  // leg frames rows 12..14
+  const legs = [
+    [".KPPPPPPK..", ".KPp..pPK..", ".OO....OO.."], // A stride
+    [".KPPPPPPK..", "..KPPPPK...", "...OOOO...."], // B pass
+    [".KPPPPPPK..", ".KPp..pPK..", "..OO..OO..."], // C stride alt
+    [".KPPPPPPK..", "..KPPPPK...", "...OOOO...."]  // D pass
+  ];
+  const SCALE = 5;
+  const W = 11, H = 15;
+  const c = document.getElementById('sprite-canvas');
+  c.width = W*SCALE; c.height = H*SCALE;
+  const ctx = c.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+
+  function drawFrame(fi, bob){
+    ctx.clearRect(0,0,c.width,c.height);
+    const rows = upper.concat(legs[fi]);
+    for (let y=0;y<rows.length;y++){
+      for (let x=0;x<rows[y].length;x++){
+        const col = PAL[rows[y][x]];
+        if (col){
+          ctx.fillStyle = col;
+          ctx.fillRect(x*SCALE, (y+bob)*SCALE*0 + y*SCALE + bob, SCALE, SCALE);
+        }
+      }
     }
   }
-});
 
-// Konami easter egg
-let kc = [], seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-document.addEventListener('keydown', (e) => {
-  kc.push(e.key);
-  kc = kc.slice(-10);
-  if (kc.join(',') === seq.join(',')) {
-    showToast('★ CHEAT MODE: STAY COZY ★');
-    document.querySelectorAll('.deco').forEach(d => d.style.opacity = '0.6');
+  const stage = c.parentElement;
+  let fi = 0, t = 0, x = -20;
+  const cycle = [0,1,2,3];
+  let cIdx = 0;
+  let lastStep = 0;
+
+  function loop(ts){
+    const sw = stage.offsetWidth;
+    x += 0.9;
+    if (x > sw + 20) x = -c.width/1 - 10;
+    // step animation ~9fps
+    if (ts - lastStep > 110){
+      cIdx = (cIdx+1) % cycle.length;
+      lastStep = ts;
+    }
+    const bob = (cIdx % 2 === 0) ? 0 : -2; // little bounce on passing frames
+    c.style.left = Math.floor(x) + 'px';
+    drawFrame(cycle[cIdx], bob);
+    requestAnimationFrame(loop);
   }
-});
+  requestAnimationFrame(loop);
+})();
+
+/* ============ konami ============ */
+let kc=[], seq=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+document.addEventListener('keydown',e=>{ kc.push(e.key); kc=kc.slice(-10); if(kc.join()===seq.join()) showToast('★ NXR CHEAT: STAY COZY ★'); });
 </script>
 
 </body>
